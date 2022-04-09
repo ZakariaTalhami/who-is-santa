@@ -1,4 +1,4 @@
-import jwt from 'jsonwebtoken';
+import jwt from "jsonwebtoken";
 
 const DEFAULT_JWT_KEY = process.env.JWT_KEY || "jwtkey";
 const DEFAULT_JWT_EXPIRATION = process.env.JWT_EXPIRATION || "1d";
@@ -14,4 +14,8 @@ function generateToken(
   return token;
 }
 
-export { generateToken };
+function decodeToken<T = any>(token: string, secret: string = DEFAULT_JWT_KEY) {
+  return jwt.verify(token, secret) as T;
+}
+
+export { generateToken, decodeToken };

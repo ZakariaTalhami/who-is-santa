@@ -1,10 +1,12 @@
 import express, { json, NextFunction, Request, Response } from "express";
+import bearerToken from "express-bearer-token";
 import mainRouter from "./app/api";
 import { HttpErrorHandlerMiddleware } from "./app/middleware/http-error-handler";
 
 const app = express();
 
 app.use(json());
+app.use(bearerToken());
 
 // Set up routes
 app.use(mainRouter);

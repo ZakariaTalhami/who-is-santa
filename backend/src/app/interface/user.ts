@@ -18,3 +18,9 @@ export interface IUserLoginDto {
   email: string;
   password: string;
 }
+
+export interface IUserTokenPayload {
+  _id: string;
+  email: string;
+  username: string;
+}
