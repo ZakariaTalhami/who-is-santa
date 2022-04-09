@@ -13,3 +13,8 @@ export interface IUserDto {
   email: string;
   password: string;
 }
+
+export interface IUserLoginDto {
+  email: string;
+  password: string;
+}

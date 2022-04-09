@@ -9,6 +9,7 @@ import { encryptPassword } from "../../utils/password-encryption";
 interface IUserDoc extends IUser, Document {
   createAt: Date;
   updatedAt: Date;
+  generateToken: () => string;
 }
 
 interface IUserModel extends Model<IUserDoc> {}

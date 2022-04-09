@@ -1,4 +1,4 @@
-import { IUserDto } from "../interface/user";
+import { IUserDto, IUserLoginDto } from "../interface/user";
 import { Users } from "../model/user";
 
 const createNewUser = async (userData: IUserDto) => {
@@ -23,4 +23,14 @@ const findUserByEmail = async (email: string) => {
   });
 };
 
-export { createNewUser, doesUserExistByEmail, findUserByEmail };
+const loginUser = async (userData: IUserLoginDto) => {
+  const user = await findUserByEmail(userData.email)
+  if (!user) {
+    throw new Error(`User with email ${userData.email} doesnt exist`);
+  }
+
+  return user.generateToken();
+  
+};
+
+export { createNewUser, doesUserExistByEmail, findUserByEmail, loginUser };
