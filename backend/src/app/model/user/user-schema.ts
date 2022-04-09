@@ -41,6 +41,7 @@ const UserSchema = new Schema<IUserDoc>(
         cookie: Number,
         glassOfMilk: Number,
       },
+      _id: false,
       default: {
         cookie: USER_DAILY_COOKIE_ALLOWANCE,
         glassOfMilk: USER_DAILY_MILK_ALLOWANCE,
