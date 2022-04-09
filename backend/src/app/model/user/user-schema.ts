@@ -18,16 +18,17 @@ const UserSchema = new Schema<IUserDoc>(
       type: String,
       required: true,
       index: true,
+      unique: true
     },
     email: {
       type: String,
       required: true,
       index: true,
+      unique: true
     },
     password: {
       type: String,
-      required: true,
-      index: true,
+      required: true
     },
     isActive: {
       type: Boolean,
