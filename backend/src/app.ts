@@ -1,12 +1,13 @@
 import express, { json, NextFunction, Request, Response } from "express";
 import mainRouter from "./app/api";
+import { HttpErrorHandlerMiddleware } from "./app/middleware/http-error-handler";
 
 const app = express();
 
 app.use(json());
 
 // Set up routes
-app.use(mainRouter)
+app.use(mainRouter);
 
 // Fallback
 app.all("*", async (req: Request, res: Response) => {
@@ -15,9 +16,12 @@ app.all("*", async (req: Request, res: Response) => {
   });
 });
 
-app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+// HTTP error handling
+app.use(HttpErrorHandlerMiddleware);
+
+app.use(function (err: Error, req: Request, res: Response, next: NextFunction) {
   console.error(err.stack);
-  res.status(500).send("Something broke!");
+  res.status(500).send("Something went wrong!");
 });
 
 export { app };
