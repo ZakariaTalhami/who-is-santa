@@ -1,11 +1,12 @@
 import express, { json, NextFunction, Request, Response } from "express";
+import mainRouter from "./app/api";
 
 const app = express();
 
 app.use(json());
 
 // Set up routes
-// app.use(someRouter)
+app.use(mainRouter)
 
 // Fallback
 app.all("*", async (req: Request, res: Response) => {

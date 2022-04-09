@@ -4,6 +4,7 @@ import {
   USER_DAILY_MILK_ALLOWANCE,
 } from "../../constants";
 import { IUser } from "../../interface/user";
+import { encryptPassword } from "../../utils/password-encryption";
 
 interface IUserDoc extends IUser, Document {
   createAt: Date;
@@ -18,17 +19,17 @@ const UserSchema = new Schema<IUserDoc>(
       type: String,
       required: true,
       index: true,
-      unique: true
+      unique: true,
     },
     email: {
       type: String,
       required: true,
       index: true,
-      unique: true
+      unique: true,
     },
     password: {
       type: String,
-      required: true
+      required: true,
     },
     isActive: {
       type: Boolean,
@@ -58,5 +59,15 @@ const UserSchema = new Schema<IUserDoc>(
     },
   }
 );
+
+UserSchema.pre("save", async function (done) {
+  if (this.isNew) {
+    if (this.isModified("password")) {
+      this.password = await encryptPassword(this.password);
+    }
+  }
+
+  done();
+});
 
 export { IUserDoc, IUserModel, UserSchema };
