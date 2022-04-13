@@ -13,6 +13,16 @@ const createNewGift = async (giftData: IGiftDto) => {
   return gift;
 };
 
+const getTodayGifts = async () => {
+  const todaysDate = getStartOfToday();
+
+  return Gifts.find({
+    createAt: {
+      $gte: todaysDate,
+    },
+  })
+};
+
 const canUserGift = async (userId: string) => {
   return !(await hasGiftedForToday(userId));
 };
@@ -30,4 +40,4 @@ const hasGiftedForToday = async (userId: string): Promise<boolean> => {
   return !!doesGiftExist;
 };
 
-export { createNewGift, canUserGift };
+export { createNewGift, canUserGift, getTodayGifts };
