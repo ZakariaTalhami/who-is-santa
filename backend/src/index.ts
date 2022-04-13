@@ -22,5 +22,6 @@ const startServer = async () => {
     await startServer();
   } catch (error: any) {
     console.log(`Failed to boot... | ${error}`);
+    console.log(error);
   }
 })();

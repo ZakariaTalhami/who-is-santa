@@ -4,3 +4,8 @@ export interface IGift {
     awardedCookies: number;
     awardedGlassesOfMilk: number;
 }
+
+export interface IGiftDto {
+    user: string;
+    body: string;
+}
