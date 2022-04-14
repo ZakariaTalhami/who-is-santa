@@ -3,7 +3,7 @@ import { DB_USER_MODEL } from "../../constants";
 import { IGift } from "../../interface/gift";
 
 interface IGiftDoc extends IGift, Document {
-  createAt: Date;
+  createdAt: Date;
   updatedAt: Date;
 }
 
