@@ -1,6 +1,6 @@
-import { AwardTypes } from "../enum";
+import { EAwardTypes } from "../enum";
 
 export interface IBalance {
-  [AwardTypes.COOKIE]: number;
-  [AwardTypes.GLASS_OF_MILK]: number;
+  [EAwardTypes.COOKIE]: number;
+  [EAwardTypes.GLASS_OF_MILK]: number;
 }
