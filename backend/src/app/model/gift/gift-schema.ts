@@ -20,11 +20,11 @@ const GiftSchema = new Schema<IGiftDoc>(
       type: String,
       required: true,
     },
-    awardedCookies: {
+    awardedCookie: {
       type: Number,
       default: 0,
     },
-    awardedGlassesOfMilk: {
+    awardedGlassOfMilk: {
       type: Number,
       default: 0,
     },

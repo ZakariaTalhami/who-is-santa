@@ -3,6 +3,7 @@ import {
   USER_DAILY_COOKIE_ALLOWANCE,
   USER_DAILY_MILK_ALLOWANCE,
 } from "../../constants";
+import { EAwardTypes } from "../../enum";
 import { IUser } from "../../interface/user";
 import { encryptPassword } from "../../utils/password-encryption";
 
@@ -10,6 +11,7 @@ interface IUserDoc extends IUser, Document {
   createAt: Date;
   updatedAt: Date;
   generateToken: () => string;
+  hasBalance: (type: EAwardTypes) => boolean;
 }
 
 interface IUserModel extends Model<IUserDoc> {}

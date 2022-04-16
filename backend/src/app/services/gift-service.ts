@@ -1,10 +1,11 @@
-import { info } from "console";
 import { QuerySelector, FilterQuery } from "mongoose";
+import { EAwardTypes } from "../enum";
 import { UserAlreadyGiftTodayError } from "../error/already-gifted-today-error";
 import { ICreatedDateRangeQuery } from "../interface/common";
 import { IGiftDto } from "../interface/gift";
 import { Gifts, IGiftDoc } from "../model/gift";
 import { getStartOfToday } from "../utils/date-utils";
+import { capitalize } from "../utils/string-utils";
 
 const logger = console;
 
@@ -26,6 +27,10 @@ const getTodayGifts = async () => {
       $gte: todaysDate,
     },
   });
+};
+
+const findGiftById = async (giftId: string) => {
+  return Gifts.findById(giftId);
 };
 
 const getGiftsByDateRange = async ({
@@ -63,4 +68,23 @@ const hasGiftedForToday = async (userId: string): Promise<boolean> => {
   return !!doesGiftExist;
 };
 
-export { createNewGift, canUserGift, getTodayGifts, getGiftsByDateRange };
+const awardGift = async (giftId: string, type: EAwardTypes, amount: number = 1) => {
+  const result = await Gifts.updateOne({
+    id: giftId,
+  }, {
+    $inc: {
+      [`awarded${capitalize(type)}`]: amount
+    }
+  });
+
+  return result.modifiedCount > 0;
+}
+
+export {
+  createNewGift,
+  findGiftById,
+  canUserGift,
+  getTodayGifts,
+  getGiftsByDateRange,
+  awardGift
+};

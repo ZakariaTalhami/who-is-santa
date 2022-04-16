@@ -1,8 +1,8 @@
 export interface IGift {
     user: string;
     body: string;
-    awardedCookies: number;
-    awardedGlassesOfMilk: number;
+    awardedCookie: number;
+    awardedGlassOfMilk: number;
 }
 
 export interface IGiftDto {
