@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response, Router } from "express";
 import { EAwardTypes } from "../../enum";
 import { UserAlreadyAwardedGiftError } from "../../error/already-awarded-gift-error";
+import { UserAwardOwnGiftError } from "../../error/cant-award-own-gift-error";
 import { InsufficientBalaneError } from "../../error/insufficient-balance-error";
 import { HttpNotFoundError } from "../../error/not-found-http-error";
 import { hasBalance } from "../../middleware/has-balance";
@@ -33,8 +34,13 @@ router.post(
     const userId = req.currentUser?._id as string;
 
     // find gift
-    const gift = GiftService.findGiftById(giftId);
+    const gift = await GiftService.findGiftById(giftId);
     if (!gift) return  next(new HttpNotFoundError(`Gift ${giftId} not found`));
+
+    // check if gift is owned by user
+    if(gift.user === userId) {
+      return next(new UserAwardOwnGiftError())
+    }
 
     // check if already awarded
     if (await UserAwardGiftService.hasUserAwardedGift(userId, giftId)) {
