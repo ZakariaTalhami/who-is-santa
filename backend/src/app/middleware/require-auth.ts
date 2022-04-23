@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { HttpUnauthorizedError } from "../error/http-unauthorized-error";
+import { HttpErrors } from "../error";
 import { IUserTokenPayload } from "../interface/user";
 import { decodeToken } from "../utils/jwt-token-utils";
 
@@ -16,13 +16,13 @@ export const requireAuth = (
   next: NextFunction
 ) => {
   if (!req.token) {
-    throw new HttpUnauthorizedError("Unauthorised");
+    throw new HttpErrors.HttpUnauthorizedError("Unauthorised");
   }
 
   try {
     req.currentUser = decodeToken<IUserTokenPayload>(req.token);
   } catch (error) {
-    throw new HttpUnauthorizedError("Unauthorised");
+    throw new HttpErrors.HttpUnauthorizedError("Unauthorised");
   }
 
   next();

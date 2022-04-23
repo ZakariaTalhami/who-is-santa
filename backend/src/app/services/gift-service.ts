@@ -1,6 +1,6 @@
 import { QuerySelector, FilterQuery } from "mongoose";
 import { EAwardTypes } from "../enum";
-import { UserAlreadyGiftTodayError } from "../error/already-gifted-today-error";
+import { HttpErrors } from "../error";
 import { ICreatedDateRangeQuery } from "../interface/common";
 import { IGiftDto } from "../interface/gift";
 import { Gifts, IGiftDoc } from "../model/gift";
@@ -11,7 +11,7 @@ const logger = console;
 
 const createNewGift = async (giftData: IGiftDto) => {
   if (!(await canUserGift(giftData.user))) {
-    throw new UserAlreadyGiftTodayError(giftData.user);
+    throw new HttpErrors.UserAlreadyGiftTodayError(giftData.user);
   }
 
   const gift = await Gifts.create(giftData);

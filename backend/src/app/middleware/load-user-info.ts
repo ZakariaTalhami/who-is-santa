@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { HttpUnauthorizedError } from "../error/http-unauthorized-error";
+import { HttpErrors } from "../error";
 import { IUserDoc } from "../model/user";
 import { UserService } from "../services";
 
@@ -16,11 +16,11 @@ export const loadUserInfo = async (
   res: Response,
   next: NextFunction
 ) => {
-  if (!req.currentUser) throw new HttpUnauthorizedError("Unauthorised");
+  if (!req.currentUser) throw new HttpErrors.HttpUnauthorizedError("Unauthorised");
 
   const user = await UserService.findUserById(req.currentUser._id);
 
-  if (!user) throw new HttpUnauthorizedError("Unauthorised");
+  if (!user) throw new HttpErrors.HttpUnauthorizedError("Unauthorised");
 
   req.user = user;
 
