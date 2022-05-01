@@ -1,9 +1,11 @@
 import dotenv from "dotenv";
+import { initAgendaScheduler } from "./boot/agenda-scheduler";
 import { initializeMongoDB } from "./boot/db-connection";
 dotenv.config();
 
 const boot = async () => {
   await initializeMongoDB();
+  await initAgendaScheduler();
 };
 
 const startServer = async () => {
